@@ -4,8 +4,7 @@ Collection of programming tasks and projects completed as part of the Qafza trai
 
 ## Repository Structure
 
-- **Task 1**:
-- **Task 2**:
+- **Task 2**: Iris Classification API using FastAPI and Machine Learning
 - **Task 3**:
 
 ## Getting Started
@@ -15,4 +14,5 @@ Each task folder contains its own README with specific setup instructions and re
 ## Author
 
 Ibrahim Sabouh
-- GitHub: [@ibrahimsabouh](https://github.com/ibrahimsabouh)
+- Email: ibrahim.sabouh7@gmail.com
+- GitHub: [ibrahimsabouh](https://github.com/ibrahimsabouh/Qafza-Tasks)

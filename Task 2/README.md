@@ -42,7 +42,7 @@ python -m venv .venv
 
 3. Install required dependencies:
 ```bash
-pip install numpy fastapi uvicorn scikit-learn joblib pydantic
+pip install numpy fastapi uvicorn scikit-learn joblib pydantic Jinja2 python-multipart
 ```
 
 ## Usage

@@ -28,19 +28,26 @@ This project implements a machine learning logistic regression model to classify
 
 ## Installation
 
-1. Clone the repository and navigate to Task 2:
+1. Clone the repository and navigate to the folder:
 ```bash
-git clone https://github.com/ibrahimsabouh/Qafza-Tasks.git
-cd "Qafza-Tasks/Task 2"
+git clone --no-checkout https://github.com/ibrahimsabouh/Qafza-Tasks.git
+cd Qafza-Tasks
 ```
 
-2. Create and activate a virtual environment:
+2. Set up sparse checkout and download only the Task 2 folder:
+```bash
+git sparse-checkout init
+git sparse-checkout set "Task 2"
+git checkout main
+```
+
+3. Create and activate a virtual environment:
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-3. Install required dependencies:
+4. Install required dependencies:
 ```bash
 pip install numpy fastapi uvicorn scikit-learn joblib pydantic Jinja2 python-multipart
 ```

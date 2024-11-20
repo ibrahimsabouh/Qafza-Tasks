@@ -39,6 +39,7 @@ cd Qafza-Tasks
 git sparse-checkout init
 git sparse-checkout set "Task 2"
 git checkout main
+cd "Task 2"
 ```
 
 3. Create and activate a virtual environment:

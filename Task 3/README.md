@@ -71,9 +71,30 @@ curl -X POST "http://localhost:8000/predict" \
      -d '{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}'
 ```
 
+## Requirements
+
+### Software
+- Python 3.9+
+- Docker
+- Git (for cloning the repository)
+
+### Python Dependencies
+The project requires the following Python packages:
+- fastapi
+- uvicorn
+- scikit-learn
+- joblib
+- pydantic
+- jinja2
+
+You can install these dependencies using the requirements.txt file:
+```bash
+pip install -r requirements.txt
+```
+
 ## Dockerfile Explanation
 The Dockerfile performs these key steps:
-- Uses Python 3.9 slim base image
+- Uses Python 3.9 slim base imag
 - Sets working directory
 - Copies project files
 - Installs dependencies

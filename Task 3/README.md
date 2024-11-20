@@ -1,7 +1,7 @@
 # Iris Classification API with Docker
 
 ## Overview
-This project implements a machine learning logistic regression model to classify Iris flowers using FastAPI, enhanced with Docker containerization.
+This project implements a machine learning logistic regression model to classify Iris flowers using FastAPI, containerized with Docker for easy deployment.
 
 ## Features
 - REST API endpoint for Iris species prediction
@@ -10,10 +10,6 @@ This project implements a machine learning logistic regression model to classify
 - Trained machine learning model using Iris dataset
 - FastAPI for efficient API handling
 - Joblib for model serialization
-
-## Prerequisites
-- Docker
-- Git
 
 ## Project Structure
 ```
@@ -28,25 +24,33 @@ This project implements a machine learning logistic regression model to classify
 └── README.md            # Project documentation
 ```
 
-## Installation & Setup
+## Running the Application
 
-### 1. Clone Repository with Sparse Checkout
+### Option 1: Using DockerHub Image (required Docker installed)
+1. Pull and Run the Docker image:
+```bash
+docker pull ibrahimsabouh/iris-classification-api
+docker run -p 8000:8000 ibrahimsabouh/iris-classification-api
+```
+
+### Option 2: Local Build
+1. Clone the repository and navigate to the folder
 ```bash
 git clone --no-checkout https://github.com/ibrahimsabouh/Qafza-Tasks.git
 cd Qafza-Tasks
+```
+
+2. Set up sparse checkout and download only the Task 3 folder
+```bash
 git sparse-checkout init
 git sparse-checkout set "Task 3"
 git checkout main
 cd "Task 3"
 ```
 
-### 2. Build Docker Image
+3. Build and Run the Docker image:
 ```bash
 docker build -t iris-classification-api .
-```
-
-### 3. Run Docker Container
-```bash
 docker run -p 8000:8000 iris-classification-api
 ```
 
@@ -82,17 +86,7 @@ To retrain the model locally:
 python model.py
 ```
 
-## Docker Rebuild
-If you modify the code or dependencies:
-```bash
-docker build -t iris-classification-api .
-docker run -p 8000:8000 iris-classification-api
-```
-
 ## Contact
 Ibrahim Sabouh
 - Email: ibrahim.sabouh7@gmail.com
 - GitHub: [ibrahimsabouh](https://github.com/ibrahimsabouh/Qafza-Tasks)
-
-## License
-[Specify your license here]

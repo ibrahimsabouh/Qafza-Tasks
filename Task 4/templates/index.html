@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-time stock market prediction dashboard with trend analysis">
+    <title>Smart Stock Prediction Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --card-background: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #dcdde1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        .header p {
+            text-align: center;
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-background);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-card {
+            text-align: center;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .metrics-card {
+            border-top: 4px solid var(--success-color);
+        }
+
+        .trend-card {
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .prediction-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .prediction-up {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+        }
+
+        .prediction-down {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--background-color);
+            border-radius: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+
+        .loading {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--accent-color);
+        }
+
+        .date-info {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            background-color: var(--background-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Smart Stock Prediction Dashboard</h1>
+            <p>Real-time market insights and predictions</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="status-message" class="status-message"></div>
+
+        <div class="dashboard-grid">
+            <div class="card prediction-card">
+                <h2 class="card-title">Tomorrow's Prediction</h2>
+                <div id="date-container" class="date-info"></div>
+                <div id="prediction-container"></div>
+                <p id="prediction-explanation" class="trend-indicator"></p>
+            </div>
+
+            <div class="card metrics-card">
+                <h2 class="card-title">Today's Market Metrics</h2>
+                <div class="metric-grid" id="metrics-container"></div>
+            </div>
+
+            <div class="card trend-card">
+                <h2 class="card-title">Market Analysis</h2>
+                <div id="trend-analysis"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            const statusMessage = document.getElementById('status-message');
+            
+            try {
+                showStatus('loading', 'Fetching latest market data...');
+
+                const response = await fetch('/latest-stock');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                updateDashboard(data);
+                hideStatus();
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus('error', 'Failed to fetch market data. Please try again later.');
+            }
+        }
+
+        function updateDashboard(data) {
+            // Update date container
+            document.getElementById('date-container').innerHTML = `
+                Latest Data: ${data.latest_date} | Prediction for: ${data.next_date}
+            `;
+
+            const predictionClass = data.prediction.toLowerCase() === 'up' ? 'prediction-up' : 'prediction-down';
+            
+            document.getElementById('prediction-container').innerHTML = `
+                <div class="prediction-value ${predictionClass}">
+                    ${data.prediction}
+                </div>
+            `;
+
+            const explanation = data.prediction.toLowerCase() === 'up'
+                ? 'Our analysis suggests a positive market trend tomorrow'
+                : 'Market indicators suggest a potential decline tomorrow';
+            
+            document.getElementById('prediction-explanation').innerHTML = explanation;
+
+            const priceChange = data.close_price - data.open_price;
+            const priceChangePercent = (priceChange / data.open_price * 100).toFixed(2);
+            
+            document.getElementById('metrics-container').innerHTML = `
+                <div class="metric-item">
+                    <div class="metric-label">Opening Price</div>
+                    <div class="metric-value">${formatCurrency(data.open_price)}</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Closing Price</div>
+                    <div class="metric-value">${formatCurrency(data.close_price)}</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Daily Change</div>
+                    <div class="metric-value" style="color: ${priceChange >= 0 ? 'var(--success-color)' : 'var(--danger-color)'}">
+                        ${priceChange >= 0 ? '+' : ''}${formatCurrency(priceChange)}
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Volume</div>
+                    <div class="metric-value">${formatNumber(data.volume)}</div>
+                </div>
+            `;
+
+            document.getElementById('trend-analysis').innerHTML = `
+                <div class="trend-indicator">
+                    <span>Market showed a ${priceChange >= 0 ? 'positive' : 'negative'} trend today</span>
+                </div>
+                <p>The market closed with a ${Math.abs(priceChangePercent)}% ${priceChange >= 0 ? 'gain' : 'loss'} 
+                   and ${data.volume > 1000000 ? 'high' : 'moderate'} trading volume.</p>
+                <p>Based on today's performance and our analysis, 
+                   we predict the market will trend <strong>${data.prediction.toLowerCase()}</strong> tomorrow.</p>
+            `;
+        }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(value);
+        }
+
+        function formatNumber(value) {
+            return new Intl.NumberFormat('en-US', {
+                notation: "compact",
+                compactDisplay: "short"
+            }).format(value);
+        }
+
+        function showStatus(type, message) {
+            const statusMessage = document.getElementById('status-message');
+            statusMessage.className = `status-message ${type}`;
+            statusMessage.textContent = message;
+            statusMessage.style.display = 'block';
+        }
+
+        function hideStatus() {
+            const statusMessage = document.getElementById('status-message');
+            statusMessage.style.display = 'none';
+        }
+
+        // Initial data fetch
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>

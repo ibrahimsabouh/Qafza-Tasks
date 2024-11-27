@@ -1,0 +1,7 @@
+.env
+etl.log
+scheduler.log
+stock_prediction.log
+model_training.log
+__pycache__/
+*.pyc

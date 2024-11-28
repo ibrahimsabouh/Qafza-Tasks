@@ -31,6 +31,7 @@ stock-price-prediction/
 ├── model.py            # ML model training script
 ├── ETL.py              # Data extraction script
 ├── scheduler.py        # Automated task scheduler
+├── requirements.txt    # Python dependencies
 ├── model.joblib        # Trained ML model
 ├── .env                # Environment variables
 │

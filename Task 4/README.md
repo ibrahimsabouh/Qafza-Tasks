@@ -25,7 +25,7 @@ This is a sophisticated, end-to-end stock market prediction application that lev
 
 ## 📂 Project Structure
 ```
-stock-price-prediction/
+.
 │
 ├── app.py              # FastAPI main application
 ├── model.py            # ML model training script
@@ -34,12 +34,6 @@ stock-price-prediction/
 ├── requirements.txt    # Python dependencies
 ├── model.joblib        # Trained ML model
 ├── .env                # Environment variables
-│
-├── logs/
-│   ├── stock_prediction.log
-│   ├── scheduler.log
-│   └── etl.log
-│
 ├── templates/
 │   └── index.html      # Web interface
 │

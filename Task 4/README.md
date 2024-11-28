@@ -1,22 +1,17 @@
 # Stock Market Prediction Application
-
 ## 🚀 Project Overview
-
 This is a sophisticated, end-to-end stock market prediction application that leverages machine learning, automated data pipelines, and web technologies to provide real-time stock price direction predictions.
 
 ## 📊 Key Features
-
 - **Automated Data Collection**
   - Daily stock data extraction from Alpha Vantage API
   - Scheduled ETL (Extract, Transform, Load) process
   - PostgreSQL database integration
-
 - **Machine Learning**
   - XGBoost classifier for stock price direction prediction
   - Advanced feature engineering
   - Cross-validation model evaluation
   - Model persistence and retraining
-
 - **Web Application**
   - FastAPI backend
   - Real-time stock prediction endpoint
@@ -24,7 +19,6 @@ This is a sophisticated, end-to-end stock market prediction application that lev
   - Comprehensive logging and error handling
 
 ## 📦 Prerequisites
-
 - Python 3.8+
 - PostgreSQL
 - Alpha Vantage API key
@@ -52,7 +46,6 @@ stock-price-prediction/
 ```
 
 ## 🔧 Installation
-
 1. Clone the repository and navigate to the folder
 ```bash
 git clone --no-checkout https://github.com/ibrahimsabouh/Qafza-Tasks.git
@@ -67,19 +60,23 @@ git checkout main
 cd "Task 4"
 ```
 
-2. Create a virtual environment
+3. Create a virtual environment
 ```bash
+# Windows
 python -m venv .venv
-.venv\Scripts\activate  # Windows
+.venv\Scripts\activate
+
+# Unix/macOS
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-3. Install dependencies
+4. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
 ## 🔐 Configuration
-
 Create a `.env` file in the project root with the following variables:
 ```
 # Alpha Vantage API Configuration
@@ -99,7 +96,6 @@ SCHEDULE_TIME=10:00
 ```
 
 ## 🚀 Running the Application
-
 ### 1. Database Setup
 Create the `stock_data` table in PostgreSQL:
 ```sql
@@ -132,7 +128,7 @@ python app.py
 ```
 - Web Interface: `http://127.0.0.1:8000`
 - API Docs: `http://127.0.0.1:8000/docs`
-- Latest Stock Data: `http://127.0.0.1:8000/latest-stock `
+- Latest Stock Data: `http://127.0.0.1:8000/latest-stock`
 
 ### 5. Start Scheduler (Optional)
 Run automated daily data retrieval:
